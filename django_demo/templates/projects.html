@@ -1,0 +1,23 @@
+{% extends "base.html" %} {% load staticfiles %}
+
+{% block content%}
+<div class="content">
+    <div class="container">
+        <h2>Projects</h2>
+        <div class="works">
+            <div class="prjt-grid">
+                <div class="box maxheight">
+                    <a class="example-image-link" href="{% static 'img/p1.jpg' %}" data-lightbox="example-1" data-title="Optional caption."><img class="example-image" src="{% static 'img/p1.jpg' %}"></a>
+                    <div class="project-info">
+                        {%for project in project_list %}
+                        <a href="single.html">{{project.title}}</a>
+                        <p>{{project.summary}}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

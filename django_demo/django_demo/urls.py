@@ -13,10 +13,12 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from account import views as account_view
 from django.conf.urls import url,include
 from django.contrib import admin
+
 from offer import views as offer_view
+from account import views as account_view
+from main_news import views as index_view
 
 admin.autodiscover()
 
@@ -38,10 +40,20 @@ offer_urlpatterns = [
     url('^download/(?P<offer_id>\d+)$', offer_view.offer_download, name="offer_download")
 ]
 
+index_urlpatterns = [
+    url(r'^$', index_view.index, name='index'),
+    url(r'^about$', index_view.about, name='about'),
+    url(r'^contact$', index_view.contact, name='contact'),
+    url(r'^gallery$', index_view.gallery, name='gallery'),
+    #url(r'^index$', index_view.index, name='index'),
+    url(r'^projects$', index_view.projects, name='projects'),
+    url(r'^typo$', index_view.typo, name='typo'),
+
+]
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', account_view.redirect_to_index),
-    url(r'^index', account_view.redirect_to_index),
+    url(r'^index/', include(index_urlpatterns)),
     url(r'^account/', include(account_urlpatterns)),
     url(r'^offer/', include(offer_urlpatterns)),
 ]
