@@ -1,37 +1,23 @@
-
 from datetime import date, time
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.http import StreamingHttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import New
 from account.models import Role
 
 
-
-
 # Create your views here.
 
-# delete button function
-def editor_delete(request):
-        checkList = request.POST.getlist('checkbox')
-        btnVal = request.POST.get('btnDelete')
-        if checkList and btnVal == 'btnDelete':
-            for newId in checkList:
-                New.objects.filter(id=newId).delete()
-                messages.success(request, r"Selected for Editor" + " is deleted.")
-                checkList.remove(newId)
-        elif btnVal == 'btnDelete':
-            messages.error(request, r"Deleted for Editor" + " is not Selected.")
-        else:
-            pass
+
+
 
 @login_required(login_url='/account/login')
 def editor_index(request):
-
-    editor_delete(request)
+    # editor_delete(request)
 
     user = request.user
     roles = list(Role.objects.filter(user=user).values('role'))
@@ -42,7 +28,7 @@ def editor_index(request):
     news = New.objects.all()
 
     if request.session['current_role'] in ['Editor']:
-         news = New.objects.filter(editor=user)
+        news = New.objects.filter(editor=user)
     else:
         pass
 
@@ -149,18 +135,43 @@ def editor_generate(request, new_id):
     new.editor_generated = True
     new.save()
 
-    messages.success(request, r"Editor for "+new.title+" is generated.")
+    messages.success(request, r"Editor for " + new.title + " is generated.")
     return redirect(reverse('editor_index'))
 
+    # new = New.objects.get(id=new_id)
+    # new.editor_generated = True
+    # new.save()
+
+    # messages.success(request, r"Editor for "+new.title+" is generated.")
 
 
-    #new = New.objects.get(id=new_id)
-    #new.editor_generated = True
-    #new.save()
+# delete button function
+# @csrf_exempt  for ajax
+@login_required(login_url='/account/login')
+def editor_delete(request):
+    checkList = request.POST.getlist('checkbox')
+    print(checkList)
 
-    #messages.success(request, r"Editor for "+new.title+" is generated.")
+    btnVal = request.POST.get('btnDelete')
+
+    # if checkList :
+    #     for newId in checkList:
+    #         New.objects.filter(id=newId).delete()
+    #         messages.success(request, r"Selected for Editor" + " is deleted.")
+    #         checkList.remove(newId)
+    # else:
+    #     messages.error(request, r"Deleted for Editor" + " is not Selected.")
+    if checkList and btnVal == 'btnDelete':
+        for newId in checkList:
+            New.objects.filter(id=newId).delete()
+            messages.success(request, r"Selected for Editor" + " is deleted.")
+            checkList.remove(newId)
+    elif btnVal == 'btnDelete':
+        messages.error(request, r"Deleted for Editor" + " is not Selected.")
+    else:
+        pass
+
     return redirect(reverse('editor_index'))
-
 
 # @login_required(login_url='/account/login')
 # def offer_sign(request, offer_id):
@@ -264,7 +275,7 @@ def editor_generate(request, new_id):
 # #             w.Quit()
 # #             pythoncom.CoUninitialize()
 
-    
+
 # #         messages.success(request, r"Offer for "+candidate.name+" is signed.")
 # #     else:
 # #         messages.error(request, r"Offer is not signed")
