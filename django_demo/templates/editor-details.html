@@ -1,0 +1,123 @@
+{% extends 'basesite.html' %}
+
+<!-- Header -->
+{% block title %} Editor | Home {% endblock %}
+<!-- Header End-->
+
+<!-- Main Page-->
+{% block breadcrumb %}
+    <ol class="breadcrumb visible-sm visible-md visible-lg">
+        <li><a href="/"><i class="icon fa fa-home"></i>Home</a></li>
+        <li><a href="/editor"><i class="icon fa fa-file-text-o"></i>Editor</a></li>
+        <li class="active"><i class="fa fa-edit"></i>Editor Details</li>
+    </ol>
+{% endblock %}
+
+{% block pull-right %}
+    <h2>Editor Details</h2>
+{% endblock %}
+
+{% block main_content %}
+    <form id="form" class="form-horizontal" action="/editor/{{ new.id }}" method="post">
+        {% csrf_token %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h6><i class="fa  fa-check-circle-o bk-fg-warning"></i>Editor Details</h6>
+                <div class="panel-actions">
+                    <a href="#" class="btn-minimize"><i class="fa fa-caret-up"></i></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Status</label>
+                    <div class="col-sm-9">
+                        {% if new.editor_generated %}
+                        <span class="label label-info">Generated</span>
+                        {% else %}
+                        <span class="label label-default">Drafted</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr />
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"> Title <span class="required">*</span></label>
+                    <div class="col-sm-9">
+                        {% if new.editor_generated or request.session.current_role != 'Editor'%}
+                        <p class="form-control-static">{{new.title}}</p>
+                        {% else %}
+                        <input type="text" name="title" class="form-control" value="{{new.title}}" required/>
+                        {% endif %} 
+                    </div>
+                    <label class="col-sm-2 control-label"> Summary <span class="required">*</span></label>
+                    <div class="col-sm-9">
+                        {% if new.editor_generated or request.session.current_role != 'Editor'%}
+                        <p class="form-control-static">{{new.summary}}</p>
+                        {% else %}
+                        <input type="text" name="summary" class="form-control" value="{{new.summary}}" required/>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr/>
+                <h4 class="text-center"> Content <span class="required">*</span></h4>
+                <hr/>
+                <div class="form-group">
+                    {% if new.editor_generated or request.session.current_role != 'Editor' %}
+                    <p class="form-control-static">{{new.content | safe}}</p>
+                    {% else %}
+                    <textarea name="content">{{new.content}}</textarea>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-sm-7 col-sm-offset-5">
+                        <button class="bk-margin-5 btn btn-info">
+                            {% if new.editor_generated or request.session.current_role != 'Editor' %}
+                            Back
+                            {% else %}
+                            Save
+                            {% endif %}
+                        </button>
+                        {% if not new.editor_generated and request.session.current_role == 'Editor' %}
+                        <button type="reset" class="bk-margin-5 btn btn-default">Reset</button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block notification %}
+    <div id="msg_level" hidden="hidden">{{ msg_level }} </div>
+    <div id="msg_content" hidden="hidden">{{ msg_content }} </div>
+{% endblock %}
+<!-- Main Page-->
+
+<!-- Page JS -->
+{% block page_js %}
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Converter.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Editor.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Sanitizer.js"></script>
+    <script src="../assets/js/pages/offer-detail.js"></script>
+    <script src="../assets/js/tinymce.js"></script>
+
+    <!-- <style>
+         .wmd-button > span {
+         background-image:
+         url('//cdn.rawgit.com/derobins/wmd/master/images/wmd-buttons.png');
+         background-repeat: no-repeat;
+         background-position: 0px 0px;
+         width: 20px;
+         height: 20px;
+         display: inline-block;
+         }
+         </style>
+         <script>
+         var converter = Markdown.getSanitizingConverter();
+         var editor = new Markdown.Editor(converter);
+         editor.run();
+    </script>-->
+
+
+{% endblock %}
+<!-- Page JS -->

@@ -16,9 +16,11 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 
-from offer import views as offer_view
 from account import views as account_view
-from main_news import views as index_view
+from offer import views as offer_view
+
+from editor import front_views
+from editor import back_views
 
 admin.autodiscover()
 
@@ -41,20 +43,31 @@ offer_urlpatterns = [
 ]
 
 index_urlpatterns = [
-    url(r'^$', index_view.index, name='index'),
-    url(r'^about$', index_view.about, name='about'),
-    url(r'^contact$', index_view.contact, name='contact'),
-    url(r'^gallery$', index_view.gallery, name='gallery'),
+    url(r'^$', front_views.index, name='index'),
+    url(r'^about$', front_views.about, name='about'),
+    url(r'^contact$', front_views.contact, name='contact'),
+    url(r'^gallery$', front_views.gallery, name='gallery'),
     #url(r'^index$', index_view.index, name='index'),
-    url(r'^projects$', index_view.projects, name='projects'),
-    url(r'^typo$', index_view.typo, name='typo'),
+    url(r'^projects$', front_views.projects, name='projects'),
+    url(r'^typo$', front_views.typo, name='typo'),
+]
+
+editor_urlpatterns = [
+    url(r'^$', back_views.editor_index, name="editor_index"),
+    url('^add$', back_views.editor_add, name="editor_add"),
+    url('^(?P<new_id>\d+)$', back_views.editor_details, name="editor_details"),
+    url('^generate/(?P<new_id>\d+)$', back_views.editor_generate, name="editor_generate"),
+    url('^delete$', back_views.editor_delete, name="editor_delete"),
 
 ]
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', account_view.redirect_to_index),
     url(r'^index/', include(index_urlpatterns)),
     url(r'^account/', include(account_urlpatterns)),
     url(r'^offer/', include(offer_urlpatterns)),
+    url(r'^editor/', include(editor_urlpatterns)),
+
 ]
 

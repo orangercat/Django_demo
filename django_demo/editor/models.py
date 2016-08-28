@@ -1,8 +1,10 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 import os
 from django_demo import settings
-
+from datetime import datetime
+from django import forms
 
 class OverwriteStorage(FileSystemStorage):
 
@@ -64,12 +66,19 @@ class Project(models.Model):
 
 
 class New(models.Model):
-    name = models.CharField('标题', max_length=200)
+    title = models.CharField('标题', max_length=200)
     summary = models.CharField('简介', max_length=200)
-    content = models.TextField('正文', help_text="A content for this thing")
+    content = models.TextField('正文', help_text="A content for this thing", null=True)
+
+    editor_generated = models.BooleanField(default=False)
+
+    create_date = models.DateField(default=datetime.now)
+
+    editor = models.ForeignKey(User)
+
 
     def __str__(self):
-        return self.name
+        return self.title
 
 
 # class Question(models.Model):

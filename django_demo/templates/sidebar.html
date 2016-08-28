@@ -25,6 +25,12 @@
                             <i class="fa fa-laptop" aria-hidden="true"></i><span>Offer</span>
                         </a>
                     </li>
+                    {% elif request.session.current_role == 'Administrator' or request.session.current_role == 'Editor' %}
+                    <li {% if current_page == 'Editor' %} class="active" {%endif%} >
+                        <a href="/editor">
+                            <i class="fa fa-laptop" aria-hidden="true"></i><span>Editor</span>
+                        </a>
+                    </li>
                     {% endif %}
 
 

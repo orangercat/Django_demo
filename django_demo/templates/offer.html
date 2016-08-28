@@ -7,8 +7,8 @@
 <!-- Main Page-->
 {% block breadcrumb %}
 <ol class="breadcrumb visible-sm visible-md visible-lg">
-	<li><a href="/"><i class="icon fa fa-home"></i>Home</a></li>
-	<li class="active"><i class="fa fa-file-text-o"></i>Offer</li>
+	  <li><a href="/"><i class="icon fa fa-home"></i>Home</a></li>
+	  <li class="active"><i class="fa fa-file-text-o"></i>Offer</li>
 </ol>
 {% endblock%}
 
@@ -28,15 +28,15 @@
             </div>
             <div class="panel-body">
                 {% if request.session.current_role == 'Recruiter' %}
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="bk-margin-bottom-10">
-                                <a class="btn btn-info" href="/offer/add">
-                                    Add <i class="fa fa-plus"></i>
-                                </a>
-                            </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="bk-margin-bottom-10">
+                            <a class="btn btn-info" href="/offer/add">
+                                Add <i class="fa fa-plus"></i>
+                            </a>
                         </div>
                     </div>
+                </div>
                 {% endif %}
                 <table class="table table-bordered table-striped table-hover" id="datatable-default">
                     <thead>
@@ -52,49 +52,49 @@
                     </thead>
                     <tbody>
                         {% if candidates %}
-                            {% for candidate in candidates %}
-                                <tr>
-                                    <td valign="">{{candidate.name}}</td>
-                                    <td>{{candidate.email}}</td>
-                                    <td>{{candidate.mobile}}</td>
-                                    <td>{{candidate.account}}</td>
-                                    <td>{{candidate.grade}}</td>
-                                    <td>
-                                        {% if candidate.offer_generated and candidate.offer_signed %}
-                                            <span class="label label-success">Signed</span>
-                                        {% elif candidate.offer_generated %}
-                                            <span class="label label-info">Generated</span>
-                                        {% else %}
-                                            <span class="label label-default">Drafted</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <a class="btn btn-default" href="/offer/{{candidate.id}}">
-                                            <i class="fa fa-search-plus "></i>
-                                        </a>
-                                        {% if not candidate.offer_generated and request.session.current_role == 'Recruiter' %}
-                                            <a class="btn btn-info" href="/offer/generate/{{candidate.id}}">
-                                                <i class="fa fa-edit "></i>
-                                            </a>
-                                        {% endif %}
-                                        {% if candidate.offer_generated and not candidate.offer_signed and request.session.current_role == 'Authorizer' %}
-                                            <a class="btn btn-warning" href="/offer/sign/{{candidate.id}}">
-                                                <i class="fa fa-edit "></i>
-                                            </a>
-                                        {% endif %}
-                                        {% if candidate.offer_signed and request.session.current_role == 'Recruiter'%}
-                                            <a class="btn btn-success" href="/offer/download/{{candidate.id}}">
-                                                <i class="fa fa-floppy-o"></i>
-                                            </a>
-                                        {% endif %}
-                                        {% if candidate.offer_signed and request.session.current_role == 'Authorizer'%}
-                                            <a class="btn btn-success" href="/offer/download/{{candidate.id}}">
-                                                <i class="fa fa-floppy-o"></i>
-                                            </a>
-                                        {% endif %}
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                        {% for candidate in candidates %}
+                        <tr>
+                            <td valign="">{{candidate.name}}</td>
+                            <td>{{candidate.email}}</td>
+                            <td>{{candidate.mobile}}</td>
+                            <td>{{candidate.account}}</td>
+                            <td>{{candidate.grade}}</td>
+                            <td>
+                                {% if candidate.offer_generated and candidate.offer_signed %}
+                                <span class="label label-success">Signed</span>
+                                {% elif candidate.offer_generated %}
+                                <span class="label label-info">Generated</span>
+                                {% else %}
+                                <span class="label label-default">Drafted</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a class="btn btn-default" href="/offer/{{candidate.id}}">
+                                    <i class="fa fa-search-plus "></i>
+                                </a>
+                                {% if not candidate.offer_generated and request.session.current_role == 'Recruiter' %}
+                                <a class="btn btn-info" href="/offer/generate/{{candidate.id}}">
+                                    <i class="fa fa-edit "></i>
+                                </a>
+                                {% endif %}
+                                {% if candidate.offer_generated and not candidate.offer_signed and request.session.current_role == 'Authorizer' %}
+                                <a class="btn btn-warning" href="/offer/sign/{{candidate.id}}">
+                                    <i class="fa fa-edit "></i>
+                                </a>
+                                {% endif %}
+                                {% if candidate.offer_signed and request.session.current_role == 'Recruiter'%}
+                                <a class="btn btn-success" href="/offer/download/{{candidate.id}}">
+                                    <i class="fa fa-floppy-o"></i>
+                                </a>
+                                {% endif %}
+                                {% if candidate.offer_signed and request.session.current_role == 'Authorizer'%}
+                                <a class="btn btn-success" href="/offer/download/{{candidate.id}}">
+                                    <i class="fa fa-floppy-o"></i>
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
                         {% endif %}
                     </tbody>
                 </table>
@@ -105,11 +105,11 @@
 {% endblock%}
 
 {% block notification %}
-    <div id="msg_level" hidden="hidden" >{{ msg_level }} </div>
-    <div id="msg_content" hidden="hidden">{{ msg_content }} </div>
-    <!--<script>-->
-        <!--console.log('{{ msg_level }}')-->
-    <!--</script>-->
+<div id="msg_level" hidden="hidden" >{{ msg_level }} </div>
+<div id="msg_content" hidden="hidden">{{ msg_content }} </div>
+<!--<script>-->
+<!--console.log('{{ msg_level }}')-->
+<!--</script>-->
 {% endblock%}
 <!-- Main Page-->
 

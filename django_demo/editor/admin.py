@@ -5,7 +5,12 @@ from .models import Project, New
 
 
 admin.site.register(Project)
-admin.site.register(New)
+
+class NewAdmin(admin.ModelAdmin):
+
+
+ pass
+admin.site.register(New, NewAdmin)
 
 
 # class QuestionInline(admin.TabularInline):

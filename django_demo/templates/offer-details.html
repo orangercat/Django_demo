@@ -32,9 +32,9 @@
                 <label class="col-sm-3 control-label">Offer Number <span class="required">*</span></label>
                 <div class="col-sm-9">
                     {% if candidate.offer_generated or request.session.current_role != 'Recruiter' %}
-                        <p class="form-control-static">{{candidate.offer_number}}</p>
+                    <p class="form-control-static">{{candidate.offer_number}}</p>
                     {% else %}
-                        <input type="text" name="name" class="form-control" value="{{candidate.offer_number}}" required/>
+                    <input type="text" name="name" class="form-control" value="{{candidate.offer_number}}" required/>
                     {% endif %}
                 </div>
             </div>
@@ -212,7 +212,13 @@
 
             <div class="row">
                 <div class="col-sm-7 col-sm-offset-5">
-                    <button class="bk-margin-5 btn btn-info">{% if candidate.offer_generated or request.session.current_role != 'Recruiter' %}Back{% else %}Save{% endif %}</button>
+                    <button class="bk-margin-5 btn btn-info">
+                        {% if candidate.offer_generated or request.session.current_role != 'Recruiter' %}
+                        Back
+                        {% else %}
+                        Save
+                        {% endif %}
+                    </button>
                     {% if not candidate.offer_generated and request.session.current_role == 'Recruiter' %}
                         <button type="reset" class="bk-margin-5 btn btn-default">Reset</button>
                     {% endif %}

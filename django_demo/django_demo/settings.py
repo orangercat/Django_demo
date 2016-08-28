@@ -42,7 +42,8 @@ INSTALLED_APPS = [
 #    'bootstrap_toolkit',
     'offer',
     'account',
-    'main_news',
+    'editor',
+    #'pagedown',
 ]
 
 #AUTH_USER_MODEL = 'users.User'

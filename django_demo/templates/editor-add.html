@@ -1,0 +1,102 @@
+{% extends 'basesite.html' %}
+
+<!-- Header -->
+{% block title %} Editor | Home {% endblock %}
+<!-- Header End-->
+
+<!-- Main Page-->
+{% block breadcrumb %}
+    <ol class="breadcrumb visible-sm visible-md visible-lg">
+        <li><a href="/"><i class="icon fa fa-home"></i>Home</a></li>
+        <li><a href="/editor"><i class="icon fa fa-file-text-o"></i>Editor</a></li>
+        <li class="active"><i class="fa fa-edit"></i>Create New Editor</li>
+    </ol>
+{% endblock %}
+
+{% block pull-right %}
+    <h2>Create New Editor</h2>
+{% endblock %}
+
+{% block main_content %}
+    <form id="form" class="form-horizontal" action="/editor/add" method="post">
+        {% csrf_token %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h6><i class="fa  fa-check-circle-o bk-fg-warning"></i>New Editor</h6>
+                <div class="panel-actions">
+                    <a href="#" class="btn-minimize"><i class="fa fa-caret-up"></i></a>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"> Title <span class="required">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="title" class="form-control" placeholder="Please enter title" required/>
+                    </div>
+                    <label class="col-sm-2 control-label"> Summary <span class="required">*</span></label>
+                    <div class="col-sm-9">
+                        <input type="text" name="summary" class="form-control" placeholder="Please enter summary"
+                               required/>
+                    </div>
+
+                </div>
+
+                <hr/>
+
+                <h4 class="text-center"> Content <span class="required">*</span></h4>
+
+                <hr/>
+                <div class="form-group">
+                    <textarea name="content">
+                    </textarea>
+                    <!-- {#                <div id="wmd-button-bar"></div>#}
+                         {#                <textarea id="wmd-input" class="wmd-input" name="content"></textarea>#}
+                         {#                <div id="wmd-preview" class="wmd-panel wmd-preview"></div>#}
+                       -->
+                </div>
+                <div class="row">
+                    <div class="col-sm-7 col-sm-offset-5">
+                        <button class="bk-margin-5 btn btn-info">Save</button>
+                        <button type="reset" class="bk-margin-5 btn btn-default">Reset</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block notification %}
+    <div id="msg_level" hidden="hidden">{{ msg_level }} </div>
+    <div id="msg_content" hidden="hidden">{{ msg_content }} </div>
+{% endblock %}
+<!-- Main Page-->
+
+<!-- Page JS -->
+{% block page_js %}
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Converter.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Editor.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/pagedown/1.0/Markdown.Sanitizer.js"></script>
+    <script src="../assets/js/pages/editor-add.js"></script>
+    <script src="../assets/js/tinymce.js"></script>
+
+    <!-- <style>
+         .wmd-button > span {
+         background-image:
+         url('//cdn.rawgit.com/derobins/wmd/master/images/wmd-buttons.png');
+         background-repeat: no-repeat;
+         background-position: 0px 0px;
+         width: 20px;
+         height: 20px;
+         display: inline-block;
+         }
+         </style>
+         <script>
+         var converter = Markdown.getSanitizingConverter();
+         var editor = new Markdown.Editor(converter);
+         editor.run();
+    </script>-->
+
+
+{% endblock %}
+<!-- Page JS -->
