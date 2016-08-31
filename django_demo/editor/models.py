@@ -1,12 +1,12 @@
 #coding:utf-8
 
-from django.contrib.auth.models import User
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 import os
 from django_demo import settings
 from datetime import datetime
 from django import forms
+from account.models import User
 
 class OverwriteStorage(FileSystemStorage):
 
@@ -76,7 +76,9 @@ class New(models.Model):
 
     create_date = models.DateField(default=datetime.now)
 
-    editor = models.ForeignKey(User)
+    editor = models.ForeignKey(User,
+                               settings.AUTH_USER_MODEL,
+    )
 
 
     def __str__(self):

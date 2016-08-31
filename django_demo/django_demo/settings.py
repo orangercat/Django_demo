@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'account',
     'django.contrib.auth',
 #    'django.contrib.sites',
 #    'users',
@@ -41,12 +42,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 #    'bootstrap_toolkit',
     'offer',
-    'account',
     'editor',
     #'pagedown',
 ]
 
-#AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'account.MyUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

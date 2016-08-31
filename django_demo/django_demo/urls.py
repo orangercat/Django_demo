@@ -26,6 +26,7 @@ admin.autodiscover()
 
 account_urlpatterns = [
     url(r'^login$', account_view.user_login, name='account_login'),
+    url(r'^signup$', account_view.user_signup, name='account_signup'),
     url(r'^logout$', account_view.user_logout, name='account_logout'),
     url(r'^switchrole/(?P<new_role>[a-z A-Z]+)$', account_view.switch_role, name='account_switch_role'),
     url(r'^profile$', account_view.user_profile, name='account_profile'),

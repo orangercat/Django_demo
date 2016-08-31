@@ -9,7 +9,14 @@ from .models import Role
 
 
 # Create your views here.
+#输入url中输入地址默认到account_pirfile函数,如果没有登陆,跳转到/account/login
+def redirect_to_index(request):
+    return redirect(
+        reverse('account_profile')
+    )
 
+def user_signup(request):
+    return render(request,'page-signup.html')
 
 def user_login(request):
     errors = []
@@ -84,10 +91,7 @@ def user_profile(request):
     return render(request, 'profile.html', {'roles': roles, 'current_page':'Profile', 'msg_level': msg_level, 'msg_content': msg_content})
 
 
-def redirect_to_index(request):
-    return redirect(
-        reverse('account_profile')
-    )
+
 
 
 @login_required(login_url='/account/login')

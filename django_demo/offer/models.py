@@ -1,8 +1,9 @@
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-
+from django.conf import settings
+from account.models import User
 
 # Create your models here.
 
@@ -76,7 +77,9 @@ class Candidate(models.Model):
 
     offer_number = models.CharField(max_length=20)
 
-    recruiter = models.ForeignKey(User)
+    recruiter = models.ForeignKey(User,
+                                  settings.AUTH_USER_MODEL
+    )
 
     offer_date = models.DateField(default=None, null=True, blank=True)
 

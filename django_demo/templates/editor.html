@@ -17,82 +17,82 @@
 {% endblock %}
 
 {% block main_content %}
-        <form id="form" class="form-horizontal" action="delete" method="post">
-            {% csrf_token %}
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="panel panel-default bk-bg-white">
-                <div class="panel-heading bk-bg-white">
-                    <h6><i class="fa fa-table red"></i><span class="break"></span>Editor</h6>
-                    <div class="panel-actions">
-                        <a href="#" class="btn-minimize"><i class="fa fa-caret-up"></i></a>
+    <form id="form" class="form-horizontal" action="delete" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="panel panel-default bk-bg-white">
+                    <div class="panel-heading bk-bg-white">
+                        <h6><i class="fa fa-table red"></i><span class="break"></span>Editor</h6>
+                        <div class="panel-actions">
+                            <a href="#" class="btn-minimize"><i class="fa fa-caret-up"></i></a>
+                        </div>
                     </div>
-                </div>
-                <div class="panel-body">
-                    {% if request.session.current_role == 'Editor' %}
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="bk-margin-bottom-10">
-                                    <a class="btn btn-info" href="/editor/add">
-                                        Add <i class="fa fa-plus"></i>
-                                    </a>
-                                    <button class="btn btn-danger" type="submit" id="btnDelete" name="btnDelete"
-                                            value="btnDelete">
-                                        Delete <i class="fa fa-minus"></i>
-                                    </button>
+                    <div class="panel-body">
+                        {% if request.session.current_role == 'Editor' %}
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="bk-margin-bottom-10">
+                                        <a class="btn btn-info" href="/editor/add">
+                                            Add <i class="fa fa-plus"></i>
+                                        </a>
+                                        <button class="btn btn-danger" type="submit" id="btnDelete" name="btnDelete"
+                                                value="btnDelete">
+                                            Delete <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endif %}
-                    {% csrf_token %}
-                    <table class="table table-bordered table-striped table-hover" id="datatable-default">
-                        <thead>
-                        <tr>
-                            <th><input type="checkbox" name="checkAll" id="checkAll"/></th>
-                            <th>Tilte</th>
-                            <th>Summary</th>
-                            <!-- <th>Content</th> -->
-                            <th>Create Day</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for new in news %}
+                        {% endif %}
+                        {% csrf_token %}
+                        <table class="table table-bordered table-striped table-hover" id="datatable-default">
+                            <thead>
                             <tr>
-                                <td><input type="checkbox" name="checkbox" id="checkbox" value="{{ new.id }}"/></td>
-                                <td valign="">{{ new.title }}</td>
-                                <td>{{ new.summary }}</td>
-                                <!-- <td>{{new.content}}</td> -->
-                                <td>{{ new.create_date }}</td>
-                                <td>
-                                    {% if new.editor_generated %}
-                                        <span class="label label-info">POST</span>
-                                    {% else %}
-                                        <span class="label label-default">Drafted</span>
-                                    {% endif %}
-                                </td>
-
-                                <td>
-                                    <a class="btn btn-default" href="/editor/{{ new.id }}">
-                                        <i class="fa fa-search-plus "></i>
-                                    </a>
-                                    {% if not new.editor_generated and request.session.current_role == 'Editor' %}
-                                        <a class="btn btn-info" href="/editor/generate/{{ new.id }}">
-                                            <i class="fa fa-edit "></i>
-                                        </a>
-                                    {% endif %}
-                                </td>
-
+                                <th><input type="checkbox" name="checkAll" id="checkAll"/></th>
+                                <th>Tilte</th>
+                                <th>Summary</th>
+                                <!-- <th>Content</th> -->
+                                <th>Create Day</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                            {% for new in news %}
+                                <tr>
+                                    <td><input type="checkbox" name="checkbox" id="checkbox" value="{{ new.id }}"/></td>
+                                    <td valign="">{{ new.title }}</td>
+                                    <td>{{ new.summary }}</td>
+                                    <!-- <td>{{new.content}}</td> -->
+                                    <td>{{ new.create_date }}</td>
+                                    <td>
+                                        {% if new.editor_generated %}
+                                            <span class="label label-info">POST</span>
+                                        {% else %}
+                                            <span class="label label-default">Drafted</span>
+                                        {% endif %}
+                                    </td>
+
+                                    <td>
+                                        <a class="btn btn-default" href="/editor/{{ new.id }}">
+                                            <i class="fa fa-search-plus "></i>
+                                        </a>
+                                        {% if not new.editor_generated and request.session.current_role == 'Editor' %}
+                                            <a class="btn btn-info" href="/editor/generate/{{ new.id }}">
+                                                <i class="fa fa-edit "></i>
+                                            </a>
+                                        {% endif %}
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-        </form>
+    </form>
 {% endblock %}
 
 {% block notification %}
@@ -155,38 +155,38 @@
         });
     </script>
 
-{#    <script>#}
-{#        $(document).ready(function () {#}
-{#            $.ajaxSetup({#}
-{#                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},#}
-{#            });#}
-{#            $('#btnDelete').click(function (event) {#}
-{#                var checkbox = $("input[name='checkbox']:checked").serialize();#}
-{#                //var password = $("#id_password").val();    //同上#}
-{#                //alert(checkbox);#}
-{#                if (checkbox == '') {#}
-{#                    alert('没有选中任何选项！');#}
-{#                    return false;#}
-{#                }#}
-{#                $.ajax({#}
-{#                    type: "POST",#}
-{#                    data: checkbox,#}
-{#                    url: "/editor/delete", //后台处理函数的url 这里用的是static url 需要与urls.py中的name一致#}
-{#                    cache: false,#}
-{#                    success: function () {#}
-{#                        window.location.reload(true);#}
-{#                    },#}
-{#                    error: function () {#}
-{#                        alert("false");#}
-{#                    }#}
-{#                });#}
-{#                location.reload();#}
-{##}
-{#                //return false;#}
-{#            });#}
-{##}
-{#        });#}
-{#    </script>#}
+    {#    <script>#}
+    {#        $(document).ready(function () {#}
+    {#            $.ajaxSetup({#}
+    {#                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},#}
+    {#            });#}
+    {#            $('#btnDelete').click(function (event) {#}
+    {#                var checkbox = $("input[name='checkbox']:checked").serialize();#}
+    {#                //var password = $("#id_password").val();    //同上#}
+    {#                //alert(checkbox);#}
+    {#                if (checkbox == '') {#}
+    {#                    alert('没有选中任何选项！');#}
+    {#                    return false;#}
+    {#                }#}
+    {#                $.ajax({#}
+    {#                    type: "POST",#}
+    {#                    data: checkbox,#}
+    {#                    url: "/editor/delete", //后台处理函数的url 这里用的是static url 需要与urls.py中的name一致#}
+    {#                    cache: false,#}
+    {#                    success: function () {#}
+    {#                        window.location.reload(true);#}
+    {#                    },#}
+    {#                    error: function () {#}
+    {#                        alert("false");#}
+    {#                    }#}
+    {#                });#}
+    {#                location.reload();#}
+    {##}
+    {#                //return false;#}
+    {#            });#}
+    {##}
+    {#        });#}
+    {#    </script>#}
 
 {% endblock %}
 <!-- Page JS -->
