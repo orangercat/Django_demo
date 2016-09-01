@@ -9,14 +9,16 @@ from .models import Role
 
 
 # Create your views here.
-#输入url中输入地址默认到account_pirfile函数,如果没有登陆,跳转到/account/login
+# 输入url中输入地址默认到account_pirfile函数,如果没有登陆,跳转到/account/login
 def redirect_to_index(request):
     return redirect(
         reverse('account_profile')
     )
 
+
 def user_signup(request):
-    return render(request,'page-signup.html')
+    return render(request, 'page-signup.html')
+
 
 def user_login(request):
     errors = []
@@ -31,7 +33,7 @@ def user_login(request):
             errors.append('Please Enter password')
         else:
             password = request.POST.get('password')
-        if username is not None and password is not None :
+        if username is not None and password is not None:
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
@@ -39,13 +41,14 @@ def user_login(request):
                     roles = list(Role.objects.filter(user=user).values('role'))
                     current_role = roles[0]['role']
                     request.session['current_role'] = current_role
-                    messages.success(request, 'Login Success as '+user.first_name+' '+user.last_name+' with '+current_role+' role.')
+                    messages.success(request,
+                                     'Login Success as ' + user.first_name + ' ' + user.last_name + ' with ' + current_role + ' role.')
                     return redirect('/')
                 else:
                     errors.append('disabled account')
             else:
                 errors.append('invaild user')
-        return render(request, 'page-login.html', {'has_error': True, 'errors':errors})
+        return render(request, 'page-login.html', {'has_error': True, 'errors': errors})
     return render(request, 'page-login.html')
 
 
@@ -65,7 +68,7 @@ def switch_role(request, new_role):
         if new_role == role['role']:
             current_role = new_role
             request.session['current_role'] = current_role
-            messages.success(request, 'Switch role success to '+current_role)
+            messages.success(request, 'Switch role success to ' + current_role)
 
     if new_role == current_role:
         messages.success(request, 'Switch role success to ' + current_role)
@@ -88,10 +91,8 @@ def user_profile(request):
         msg_level = msg.tags
         msg_content = msg
 
-    return render(request, 'profile.html', {'roles': roles, 'current_page':'Profile', 'msg_level': msg_level, 'msg_content': msg_content})
-
-
-
+    return render(request, 'profile.html',
+                  {'roles': roles, 'current_page': 'Profile', 'msg_level': msg_level, 'msg_content': msg_content})
 
 
 @login_required(login_url='/account/login')
@@ -135,5 +136,3 @@ def user_changePWD(request):
         messages.error(request, errorMessage)
 
     return redirect('account_profile')
-
-

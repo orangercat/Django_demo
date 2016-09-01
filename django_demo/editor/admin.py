@@ -6,10 +6,11 @@ from .models import Project, New
 
 admin.site.register(Project)
 
+
 class NewAdmin(admin.ModelAdmin):
+    pass
 
 
- pass
 admin.site.register(New, NewAdmin)
 
 

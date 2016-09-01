@@ -1,24 +1,10 @@
-from .models import Role
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
-from .models import MyUser
 from django import forms
 from django.contrib import admin
 from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
-
-
-# Register your models here.
-
-
-class RoleAdmin(admin.ModelAdmin):
-    list_display = ('user', 'role')
-    search_fields = ['user']
-
-
-admin.site.register(Role, RoleAdmin)
-
-
+from django.contrib.auth import get_user_model
+from .models import Role
 
 
 class UserCreationForm(forms.ModelForm):
@@ -28,7 +14,7 @@ class UserCreationForm(forms.ModelForm):
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
 
     class Meta:
-        model = MyUser
+        model = get_user_model()
         fields = ('email', 'date_of_birth')
 
     def clean_password2(self):
@@ -56,7 +42,7 @@ class UserChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
 
     class Meta:
-        model = MyUser
+        model = get_user_model()
         fields = ('email', 'password', 'date_of_birth', 'is_active', 'is_admin')
 
     def clean_password(self):
@@ -87,14 +73,22 @@ class UserAdmin(BaseUserAdmin):
         (None, {
             'classes': ('wide',),
             'fields': ('email', 'date_of_birth', 'password1', 'password2')}
-        ),
+         ),
     )
     search_fields = ('email',)
     ordering = ('email',)
     filter_horizontal = ()
 
+
+class RoleAdmin(admin.ModelAdmin):
+    list_display = ('user', 'role')
+    search_fields = ['user']
+
+
+admin.site.register(Role, RoleAdmin)
+
 # Now register the new UserAdmin...
-admin.site.register(MyUser, UserAdmin)
+admin.site.register(get_user_model(), UserAdmin)
 # ... and, since we're not using Django's built-in permissions,
 # unregister the Group model from admin.
 admin.site.unregister(Group)

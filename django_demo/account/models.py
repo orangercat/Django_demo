@@ -1,14 +1,10 @@
-from django.contrib.auth.models import BaseUserManager,AbstractBaseUser
+from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.db import models
-from django import forms
 from django.conf import settings
+from django.contrib.auth import get_user_model
 
 
 # Create your models here.
-from django.db import models
-from django.contrib.auth.models import (
-    BaseUserManager, AbstractBaseUser
-)
 
 
 class MyUserManager(BaseUserManager):
@@ -67,7 +63,7 @@ class MyUser(AbstractBaseUser):
         # The user is identified by their email address
         return self.email
 
-    def __str__(self):              # __unicode__ on Python 2
+    def __str__(self):  # __unicode__ on Python 2
         return self.email
 
     def has_perm(self, perm, obj=None):
@@ -86,20 +82,20 @@ class MyUser(AbstractBaseUser):
         # Simplest possible answer: All admins are staff
         return self.is_admin
 
+
 class Role(models.Model):
-    user = models.ForeignKey(MyUser,
-                             settings.AUTH_USER_MODEL,
+    user = models.ForeignKey(
+        #MyUser,
+        settings.AUTH_USER_MODEL,
     )
     role = models.CharField(max_length=20)
+
     def __str__(self):
         return self.role
 
+
 class User(models.Model):
-    user = models.ForeignKey(MyUser,
-                             settings.AUTH_USER_MODEL,
+    user = models.ForeignKey(
+        #MyUser,
+        settings.AUTH_USER_MODEL,
     )
-
-    
-
-
-
